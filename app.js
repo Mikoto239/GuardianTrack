@@ -39,11 +39,11 @@ app.post('/data', (req, res) => {
   arduinoData.save()
     .then(() => {
       console.log('Data saved to MongoDB:', arduinoData);
-      res.sendStatus(200);
+      return res.sendStatus(200);
     })
     .catch(error => {
       console.error('Error saving data to MongoDB:', error);
-      res.sendStatus(500);
+      return res.sendStatus(500);
     });
 });
 
