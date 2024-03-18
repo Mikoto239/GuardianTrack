@@ -18,7 +18,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Use the homeRouter for the '/home' route
+// Use the homeRouter for the '/' route
 app.use('/', homeRouter);
 
 // Define schema for Arduino data
