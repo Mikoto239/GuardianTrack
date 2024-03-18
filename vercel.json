@@ -4,7 +4,8 @@
    "builds": [{ "src": "/app.js", "use": "@vercel/node" }],
   "routes": [
     { "src": "/data", "dest": "/app.js" },
-    { "src": "/(.*)", "dest": "/app.js" }
+    { "src": "/(.*)", "dest": "/app.js" },
+     { "src": "/", "dest": "/app.js" }
   ]
 }
 
