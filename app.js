@@ -1,7 +1,8 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const homeRouter = require('./home.js');
+require('dotenv').config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -47,6 +48,9 @@ app.post('/data', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+// Use the homeRouter for the root route
+app.use('/', homeRouter);
 
 app.listen(PORT, () => {
   console.log(`Node.js server listening on port ${PORT}`);
