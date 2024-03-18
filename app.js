@@ -19,7 +19,7 @@ db.once('open', () => {
 });
 
 // Use the homeRouter for the '/home' route
-app.use('/home', homeRouter);
+app.use('/', homeRouter);
 
 // Define schema for Arduino data
 const arduinoDataSchema = new mongoose.Schema({
