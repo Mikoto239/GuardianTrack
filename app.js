@@ -28,7 +28,7 @@ const ArduinoData = mongoose.model('ArduinoData', arduinoDataSchema);
 
 app.use(bodyParser.json());
 
-// Route to handle Arduino data
+// Route to handle Arduino data (POST)
 app.post('/data', (req, res) => {
   const { vibrationDuration, latitude, longitude } = req.body;
 
@@ -46,6 +46,19 @@ app.post('/data', (req, res) => {
     .catch(error => {
       console.error('Error saving data to MongoDB:', error);
       res.status(500).send('Failed to save data!');
+    });
+});
+
+// Route to fetch data from MongoDB (GET)
+app.get('/data', (req, res) => {
+  ArduinoData.find()
+    .then(data => {
+      console.log('Retrieved data from MongoDB:', data);
+      res.status(200).json(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).send('Failed to fetch data!');
     });
 });
 
