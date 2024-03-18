@@ -16,7 +16,6 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
-  res.sendStatus(200);
 });
 
 // Define schema for Arduino data
@@ -42,11 +41,11 @@ app.post('/data', (req, res) => {
   arduinoData.save()
     .then(() => {
       console.log('Data saved to MongoDB:', arduinoData);
-      res.sendStatus(200);
+      res.status(200).send('Data saved successfully!');
     })
     .catch(error => {
       console.error('Error saving data to MongoDB:', error);
-      res.sendStatus(500);
+      res.status(500).send('Failed to save data!');
     });
 });
 
