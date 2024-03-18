@@ -50,7 +50,7 @@ app.post('/data', (req, res) => {
 });
 
 // Route to fetch data from MongoDB (GET)
-app.get('/data', (req, res) => {
+app.get('/getme', (req, res) => {
   ArduinoData.find()
     .then(data => {
       console.log('Retrieved data from MongoDB:', data);
