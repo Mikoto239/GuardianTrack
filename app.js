@@ -1,8 +1,7 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const homeRouter = require('./home.js');
-require('dotenv').config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,9 +16,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
-
-// Use the homeRouter for the '/home' route
-app.use('/', homeRouter);
 
 // Define schema for Arduino data
 const arduinoDataSchema = new mongoose.Schema({
@@ -44,11 +40,11 @@ app.post('/data', (req, res) => {
   arduinoData.save()
     .then(() => {
       console.log('Data saved to MongoDB:', arduinoData);
-      return res.sendStatus(200);
+      res.sendStatus(200);
     })
     .catch(error => {
       console.error('Error saving data to MongoDB:', error);
-      return res.sendStatus(500);
+      res.sendStatus(500);
     });
 });
 
