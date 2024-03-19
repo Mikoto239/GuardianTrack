@@ -18,9 +18,6 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Use the homeRouter for the '/home' route
-app.use('/home', homeRouter);
-
 // Define schema for Arduino data
 const arduinoDataSchema = new mongoose.Schema({
   vibrationDuration: Number,
@@ -31,7 +28,7 @@ const ArduinoData = mongoose.model('ArduinoData', arduinoDataSchema);
 
 app.use(bodyParser.json());
 
-// Route to handle Arduino data
+// Route to handle Arduino data (POST)
 app.post('/data', (req, res) => {
   const { vibrationDuration, latitude, longitude } = req.body;
 
@@ -44,13 +41,29 @@ app.post('/data', (req, res) => {
   arduinoData.save()
     .then(() => {
       console.log('Data saved to MongoDB:', arduinoData);
-      res.sendStatus(200);
+      res.status(200).send('Data saved successfully!');
     })
     .catch(error => {
       console.error('Error saving data to MongoDB:', error);
-      res.sendStatus(500);
+      res.status(500).send('Failed to save data!');
     });
 });
+
+// Route to fetch data from MongoDB (GET)
+app.get('/data', (req, res) => {
+  ArduinoData.find()
+    .then(data => {
+      console.log('Retrieved data from MongoDB:', data);
+      res.status(200).json(data);
+    })
+    .catch(error => {
+      console.error('Error fetching data from MongoDB:', error);
+      res.status(500).send('Failed to fetch data!');
+    });
+});
+
+// Use the homeRouter for the root route
+app.use('/', homeRouter);
 
 app.listen(PORT, () => {
   console.log(`Node.js server listening on port ${PORT}`);
